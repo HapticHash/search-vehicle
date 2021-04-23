@@ -1,0 +1,27 @@
+.ant-select-selector {
+  margin: 5px !important;
+  padding: 5px 10px !important;
+}
+
+.ant-select-arrow {
+  font-size: 15px !important;
+  font-weight: bold !important;
+  margin-right: 15px !important;
+  margin-top: -8px !important;
+  right: 7px !important;
+}
+
+.Filter__label {
+  margin: 1em;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.FilterOptions__make,
+.FilterOptions__type {
+  margin: 0.5em 1em;
+}
+.FilterOptions {
+  width: 90%;
+  margin: 0 auto;
+}

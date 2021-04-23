@@ -5,3 +5,10 @@
 .App__search {
   text-align: center;
 }
+.image {
+  text-align: center;
+  width: 100%;
+}
+img {
+  width: 25em;
+}

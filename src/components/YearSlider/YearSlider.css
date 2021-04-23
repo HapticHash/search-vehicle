@@ -1,6 +1,6 @@
 .YearSlider {
   width: 25em;
-  margin: 2em;
+  margin: 2em auto;
 }
 .year__slider {
   text-align: center;

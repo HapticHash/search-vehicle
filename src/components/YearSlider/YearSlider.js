@@ -20,6 +20,9 @@ const marks = {
 function YearSlider() {
   return (
     <div className="YearSlider">
+      <label for="FilterOptions__make__select" className="Filter__label">
+        Car's Year
+      </label>
       <Slider
         min={1949}
         max={2022}
