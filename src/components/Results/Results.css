@@ -1,0 +1,42 @@
+.Results__row {
+  width: 80%;
+  margin: 1em auto;
+}
+.Results__searchbar {
+  background-color: #fff;
+  display: flex;
+  width: 90%;
+  border-radius: 10px;
+  margin: 0.5em auto;
+  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+}
+.input__search {
+  width: 100%;
+  margin: 0.7em;
+  border: none;
+  padding: 0.7em 1em;
+}
+
+.input__button {
+  margin: 0.7em;
+}
+
+.input__filter svg {
+  color: #fff;
+  height: 27px;
+  width: 22px;
+}
+
+.input__filter {
+  margin: 1em;
+}
+input {
+  outline: none;
+}
+.ant-select-focused .ant-select-selector,
+.ant-select-selector:focus,
+.ant-select-selector:active,
+.ant-select-open .ant-select-selector {
+  border-color: none !important;
+  box-shadow: none !important;
+}
