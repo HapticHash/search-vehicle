@@ -1,3 +1,9 @@
+body {
+  overflow-x: hidden;
+}
+.App__header {
+  background-color: #f2aa4cff;
+}
 .App__header__title {
   margin: 0.5em auto;
   text-align: center;

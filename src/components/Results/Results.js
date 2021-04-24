@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Results.css";
 import axios from "axios";
-import { AdjustmentsIcon } from "@heroicons/react/outline";
-import { Col, Row, Select, Slider } from "antd";
+import { Col, Row, Select, Slider, Typography, Tag } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import FilterOptions from "../FilterOptions/FilterOptions";
+
 import ShowResults from "./ShowResults";
-import YearSlider from "../YearSlider/YearSlider";
-import loadingGif from "../../loading.gif";
+
+import loadingGif from "../../assets/loading.gif";
+import SeparateSvg from "../../assets/separate.svg";
 
 const marks = {
   1949: {
@@ -26,28 +26,27 @@ const marks = {
 };
 
 function tagRender(props) {
-  const { label } = props;
+  const { label, closable, onClose } = props;
   return (
-    <div>{label}</div>
-    // <Tag
-    //   color="blue"
-    //   closable={closable}
-    //   onClose={onClose}
-    //   style={{
-    //     margin: 5,
-    //     marginLeft: 5,
-    //     padding: 5,
-    //     paddingLeft: 10,
-    //     paddingRight: 10,
-    //   }}
-    // >
-    //   {label}
-    // </Tag>
+    <Tag
+      color="blue"
+      closable={closable}
+      onClose={onClose}
+      style={{
+        margin: 5,
+        marginLeft: 5,
+        padding: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+      }}
+    >
+      {label}
+    </Tag>
   );
 }
 
 function Results() {
-  let textInput = React.createRef();
+  const { Title } = Typography;
   var store = [];
   var sliderVal1 = 0;
   var sliderVal2 = 0;
@@ -63,7 +62,7 @@ function Results() {
 
   let lower_str = "";
   let cap_str = "";
-  // var flag = true;
+
   const [flag, setFlag] = useState([true]);
   const [check, setCheck] = useState([false]);
 
@@ -114,8 +113,9 @@ function Results() {
     fetchData();
   }, [url2]);
 
-  function testFun(values) {
+  function getMakeValue(values) {
     setSearchRes(values[0]);
+    console.log("------>", values);
   }
 
   function valueSelectedType(value) {
@@ -130,9 +130,17 @@ function Results() {
   }
   return (
     <div className="Results">
-      <Row align="middle" className="Results__row">
-        <div className="Results__searchbar">
-          <Col flex="auto">
+      <div className="Results__searchbar">
+        <Row className="App__header Results__row">
+          <Col span={24}>
+            {/* <div className="image">
+            <img src="https://lh3.googleusercontent.com/proxy/b1wGY5L_AHu4PvFXyU2Z73pFmgNOChRGsvltudPKhV6ZSKISc1Rz_91-3MqmyIke4Hf3cMus3ibtjk4WUIz2pBjy1q68kpI" />
+          </div> */}
+            <Title className="App__header__title">Search your car</Title>
+          </Col>
+        </Row>
+        <Row align="middle" className="Results__row">
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             {/* <input
               type="text"
               ref={textInput}
@@ -140,52 +148,39 @@ function Results() {
               className="input__search"
             /> */}
             <div className="FilterOptions__make">
+              <label
+                for="FilterOptions__type__select"
+                className="Filter__label"
+              >
+                Manufacturer of Car
+              </label>
               <Select
                 mode="tags"
                 className="FilterOptions__make__select"
-                // tagRender={tagRender}
+                tagRender={tagRender}
                 placement="bottomCenter"
                 defaultValue={[]}
-                placeholder="Select your make"
+                placeholder="Select your car manufacturer"
                 style={{ width: "100%" }}
                 options={options}
                 filterOption={true}
-                onChange={testFun}
+                onChange={getMakeValue}
               />
             </div>
           </Col>
-        </div>
-      </Row>
-
-      {/* <Row className="Results__filters">
-        <Col span={24}>
-          <div className="Results__filters__options">
-            <FilterOptions />
-          </div>
-        </Col>
-      </Row> */}
-
-      <div className="FilterOptions">
-        <Row>
-          <Col span={12}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div className="FilterOptions__type">
               <label
                 for="FilterOptions__type__select"
                 className="Filter__label"
               >
-                Car's Type
+                Type of Car
               </label>
 
               <Select
-                showSearch
+                defaultValue="Passenger Car"
                 style={{ width: "100%" }}
-                placeholder="Search to Select"
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-                onSelect={valueSelectedType}
+                onChange={valueSelectedType}
               >
                 <Option value="Motorcycle">Motorcycle</Option>
                 <Option value="Passenger Car">Passenger Car</Option>
@@ -203,16 +198,16 @@ function Results() {
             </div>
           </Col>
         </Row>
-        <Row></Row>
-        <Row>
-          <Col span={24}>
+        <Row align="middle" className="Results__YearSlider__row">
+          <Col xs={24} sm={24} md={24} lg={24} xl={24}>
             <div className="FilterOptions__year">
               <div className="YearSlider">
                 <label
                   for="FilterOptions__make__select"
-                  className="Filter__label"
+                  className="Filter__label__year"
+                  align="middle"
                 >
-                  Car's Year
+                  Year Range
                 </label>
                 <Slider
                   min={1949}
@@ -224,19 +219,12 @@ function Results() {
                 />
               </div>
             </div>
-            <div>
-              {/* {demo && demo.length > 0
-              ? demo.map((datas) => {
-                  return <div> {datas.value} </div>;
-                  // return <TestComp />;
-                })
-              : "Loading..."} */}
-              {/* <TestComp make={carTypeOptions} /> */}
-            </div>
           </Col>
         </Row>
       </div>
-
+      <div className="Results__searchbar__end">
+        <img src={SeparateSvg} alt="back svg" />
+      </div>
       <div className="Results__group">
         {searchRes &&
         searchRes.length != 0 &&
@@ -254,7 +242,19 @@ function Results() {
             </div>
           )
         ) : (
-          <div>Search Filterss </div>
+          <div>
+            <div className="card__error__filter">
+              <div>
+                <img
+                  className="card__error__img__filter"
+                  src="https://cdn.dribbble.com/users/754943/screenshots/2761885/dribbble-filter.gif"
+                  alt="apply filters"
+                />
+                <h1>Please apply filters</h1>
+                <p>It seems like there are no filters applied</p>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -1,15 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap");
 .Results__row {
   width: 80%;
-  margin: 1em auto;
+  margin: 0.3em auto;
+}
+.Results__YearSlider__row {
+  width: 100%;
+  justify-items: center;
+  margin-bottom: 2em;
 }
 .Results__searchbar {
-  background-color: #fff;
+  background-color: #f2aa4cff;
   display: flex;
   flex-wrap: wrap;
-  width: 90%;
-  border-radius: 10px;
-  margin: 0.5em auto;
-  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+  padding: 1em;
+  /* box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%); */
+}
+.Results__searchbar__end {
+  width: 100%;
+  margin-top: -2em;
+}
+.Results__searchbar__end img {
+  transform: rotate(180deg);
+  width: 100%;
+  object-fit: cover;
 }
 .input__search {
   width: 95%;
@@ -19,29 +32,12 @@
   font-size: 1.1em;
   font-weight: 500;
 }
-
-.input__search__button {
-  margin: 1em 0.7em;
-  width: 8em;
-  padding: 0.7em 1em;
-  background-color: #2196f3;
-  color: #fff;
-  border: none;
-  border-radius: 1em;
-  cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-  transition: transform 0.45s;
+h1.ant-typography,
+.ant-typography h1 {
+  font-family: "Poppins", sans-serif;
+  margin: 0 !important;
+  color: #101820ff;
 }
-.input__search__button:hover {
-  transform: scale(1.03);
-  transition: transform 0.45s;
-}
-.input__search__icon {
-  font-size: 1.2em;
-  vertical-align: text-bottom;
-}
-
 input {
   outline: none;
 }
@@ -74,4 +70,106 @@ input {
   .ant-select-selector
   .ant-select-selection-search-input {
   margin: 2px -4px !important;
+}
+
+/* Filter Options css */
+.ant-select-selector {
+  margin: 5px !important;
+  padding: 5px 10px !important;
+  border-radius: 8px !important;
+}
+
+.ant-select-arrow {
+  font-size: 15px !important;
+  font-weight: bold !important;
+  margin-right: 15px !important;
+  margin-top: -8px !important;
+  right: 7px !important;
+}
+
+.Filter__label {
+  margin: 1em 0.7em;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #101820ff;
+}
+.Filter__label__year {
+  /* margin: 1em auto; */
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #101820ff;
+}
+
+.FilterOptions__make,
+.FilterOptions__type {
+  margin: 0.5em 1em;
+}
+.FilterOptions {
+  width: 90%;
+  margin: 0 auto;
+}
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  width: auto !important;
+}
+/* Year Slider CSS */
+.YearSlider {
+  width: 25em;
+  margin: 2em auto;
+  text-align: center;
+}
+.year__slider {
+  text-align: center;
+}
+
+.ant-slider-step {
+  background: #e0e0e0 !important;
+}
+.ant-slider-track {
+  background-color: #101820ff !important;
+  height: 6px !important;
+  margin-top: -1px !important;
+  z-index: 1 !important;
+}
+.ant-slider-handle {
+  width: 20px !important;
+  height: 20px !important;
+  margin-top: -9px !important;
+  z-index: 2 !important;
+}
+.ant-slider-dot {
+  width: 10px !important;
+  height: 10px !important;
+  border: 1px solid #101820ff !important;
+}
+.ant-slider-handle {
+  border: 1px solid #101820ff !important;
+}
+.ant-slider-mark-text {
+  color: #111 !important;
+}
+
+.card__error__filter {
+  background-color: #fff;
+  width: 20em;
+  font-size: 1em;
+  color: #111;
+  margin: 0em auto;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  transition: transform 0.45s;
+}
+
+.card__error__filter:hover {
+  transform: scale(1.1);
+  transition: transform 0.45s;
+}
+.card__error__filter {
+  width: 25em !important;
+  text-align: center;
+  background-color: #fefcfc;
+}
+.card__error__img__filter {
+  width: 70%;
 }

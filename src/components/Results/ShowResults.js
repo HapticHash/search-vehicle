@@ -5,7 +5,6 @@ var lower_str = "";
 var cap_str = "";
 
 function capitalizeText(ele) {
-  console.log("===========", ele);
   lower_str = ele.toLowerCase();
   cap_str = lower_str.charAt(0).toUpperCase() + lower_str.substr(1);
   return cap_str;
@@ -13,7 +12,7 @@ function capitalizeText(ele) {
 function showResults(props) {
   return (
     <div className="Results__data">
-      {/* <h1>Data: {data ? data.length : "null"}</h1> */}
+      {/* <h1>Data: {props.data ? props.data.length : "null"}</h1> */}
       {props.data && props.data.length > 0 ? (
         props.data.map((datas) => {
           return (
