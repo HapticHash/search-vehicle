@@ -1,0 +1,37 @@
+.Results__data {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin: 2em auto;
+}
+.card,
+.card__error {
+  background-color: #fff;
+  width: 20em;
+  font-size: 1em;
+  color: #111;
+  margin: 1em;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  transition: transform 0.45s;
+}
+.card:hover,
+.card__error:hover {
+  transform: scale(1.1);
+  transition: transform 0.45s;
+}
+.card__error {
+  width: 25em !important;
+  text-align: center;
+  background-color: #fefcfc;
+}
+.card__error__img {
+  width: 70%;
+}
+.Card__heading {
+  text-transform: capitalize !important;
+}

@@ -31,6 +31,11 @@
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  transition: transform 0.45s;
+}
+.input__search__button:hover {
+  transform: scale(1.03);
+  transition: transform 0.45s;
 }
 .input__search__icon {
   font-size: 1.2em;
@@ -54,30 +59,19 @@ input {
   width: 90%;
   margin: 0 auto;
 }
-.Results__data {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+.Results__loading {
   width: 100%;
-  margin: 2em auto;
+  margin: 5em auto;
+  text-align: center;
 }
-.card {
-  background-color: #fff;
-  width: 15em;
-  font-size: 1em;
-  color: #111;
-  margin: 1em;
-  padding: 1em;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-  transition: transform 0.45s;
+.Results__loading img {
+  width: 10em;
 }
-.card:hover {
-  transform: scale(1.1);
-  transition: transform 0.45s;
+.ant-select-selector {
+  height: auto !important;
 }
-.Card__heading {
-  text-transform: capitalize !important;
+.ant-select:not(.ant-select-customize-input)
+  .ant-select-selector
+  .ant-select-selection-search-input {
+  margin: 2px -4px !important;
 }

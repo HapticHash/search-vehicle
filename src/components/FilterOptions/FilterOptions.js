@@ -16,7 +16,6 @@ const carTypeOptions = [
   { value: "Incomplete Vehicle" },
 ];
 
-function testFun() {}
 function tagRender(props) {
   const { label, closable, onClose } = props;
   return (
@@ -38,19 +37,21 @@ function tagRender(props) {
 }
 
 function FilterOptions(props) {
+  const { Option } = Select;
   const [test, setTest] = useState([]);
   const [make, setMake] = useState([]);
   const [options, setOptions] = useState([]);
   let lower_str = "";
   let cap_str = "";
-  const demo = [];
+  var demo = [];
+  var store = [];
 
   const url = "https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json";
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(url);
-      setMake(request.data.results);
-      // console.log("==>", request.data.Results);
+      setMake(request.data.Results);
+      console.log("==>", request.data.Results);
       const carMakeList = [];
       request.data.Results.forEach((element) => {
         lower_str = element.Make_Name.toLowerCase();
@@ -64,39 +65,21 @@ function FilterOptions(props) {
   }, [url]);
 
   function onSelectItem(value) {
-    demo.push(value);
-    console.log("=+=+=", demo);
+    demo = value;
     // setTest(demo);
+  }
+  function testFun(values) {
+    store = values;
   }
   return (
     <div className="FilterOptions">
       <Row>
         <Col span={12}>
-          <div className="FilterOptions__make">
-            <label for="FilterOptions__make__select" className="Filter__label">
-              Car's Make
-            </label>
-            <Select
-              mode="multiple"
-              showArrow
-              className="FilterOptions__make__select"
-              tagRender={tagRender}
-              placement="bottomCenter"
-              defaultValue={[]}
-              placeholder="Select your make"
-              style={{ width: "100%" }}
-              options={options}
-              filterOption={true}
-              onChange={testFun}
-            />
-          </div>
-        </Col>
-        <Col span={12}>
           <div className="FilterOptions__type">
             <label for="FilterOptions__type__select" className="Filter__label">
               Car's Type
             </label>
-            <Select
+            {/* <Select
               mode="multiple"
               showArrow
               className="FilterOptions__type__select"
@@ -108,7 +91,25 @@ function FilterOptions(props) {
               options={carTypeOptions}
               filterOption={true}
               onChange={onSelectItem}
-            />
+            /> */}
+            <Select
+              showSearch
+              style={{ width: 200 }}
+              placeholder="Search to Select"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              <Option value="1">Motorcycle</Option>
+              <Option value="2">Passenger Car</Option>
+              <Option value="3">Truck</Option>
+              <Option value="4">Trailer</Option>
+              <Option value="5">Bus</Option>
+              <Option value="6">Multipurpose Passenger Vehicle (MPV)</Option>
+              <Option value="7">Low Speed Vehicle (LSV)</Option>
+              <Option value="8">Incomplete Vehicle</Option>
+            </Select>
           </div>
         </Col>
       </Row>
@@ -119,13 +120,13 @@ function FilterOptions(props) {
             <YearSlider />
           </div>
           <div>
-            {/* <h1>Data: {data ? data.length : "null"}</h1> */}
-            {demo && demo.length > 0
+            {/* {demo && demo.length > 0
               ? demo.map((datas) => {
                   return <div> {datas.value} </div>;
                   // return <TestComp />;
                 })
-              : "Loading..."}
+              : "Loading..."} */}
+            {/* <TestComp make={carTypeOptions} /> */}
           </div>
         </Col>
       </Row>
