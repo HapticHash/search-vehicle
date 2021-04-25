@@ -17,7 +17,7 @@
 }
 .Results__searchbar__end {
   width: 100%;
-  margin-top: -2em;
+  margin-top: -2px;
 }
 .Results__searchbar__end img {
   transform: rotate(180deg);
@@ -153,7 +153,7 @@ input {
   width: 20em;
   font-size: 1em;
   color: #111;
-  margin: 0em auto;
+  margin: 1.5em auto;
   padding: 1em;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,

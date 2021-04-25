@@ -1,14 +1,20 @@
 import React from "react";
 import "./ShowResults.css";
+import CarImage from "../../assets/car.png";
 
 var lower_str = "";
 var cap_str = "";
+var carImageUrl = "";
 
 function capitalizeText(ele) {
   lower_str = ele.toLowerCase();
   cap_str = lower_str.charAt(0).toUpperCase() + lower_str.substr(1);
   return cap_str;
 }
+// function getCarImage(carType) {
+//   carImageUrl = carType + ".png";
+//   return carImageUrl;
+// }
 function showResults(props) {
   return (
     <div className="Results__data">
@@ -18,9 +24,14 @@ function showResults(props) {
           return (
             <div key={datas.Model_ID} className="card">
               <div>
-                <h2 className="Card__heading">{datas.Model_Name}</h2>
-                <p>{capitalizeText(datas.Make_Name)}</p>
-                <p>{datas.VehicleTypeName}</p>
+                <div className="card__image">
+                  <img className="card__img" src={CarImage} alt="car image" />
+                </div>
+                <h2 className="Card__heading">
+                  {capitalizeText(datas.Make_Name)} {datas.Model_Name}
+                </h2>
+                {/* <p>{capitalizeText(datas.Make_Name)}</p> */}
+                {/* <p>{datas.VehicleTypeName}</p> */}
               </div>
             </div>
           );

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Results.css";
 import axios from "axios";
 import { Col, Row, Select, Slider, Typography, Tag } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
 
 import ShowResults from "./ShowResults";
 
@@ -10,13 +9,14 @@ import loadingGif from "../../assets/loading.gif";
 import SeparateSvg from "../../assets/separate.svg";
 
 const marks = {
-  1949: {
+  1995: {
     style: {
       color: "#111",
     },
-    label: <strong>1949</strong>,
+    label: <strong>1995</strong>,
   },
-  1986: "1986",
+  2004: "2004",
+  2013: "2013",
   2022: {
     style: {
       color: "#111",
@@ -53,41 +53,49 @@ function Results() {
   const { Option } = Select;
 
   const [options, setOptions] = useState([]);
-  const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
   const [results, setResults] = useState([]);
   const [searchRes, setSearchRes] = useState([]);
   const [typeRes, setTypeRes] = useState([]);
   const [sliderRes, setSliderRes] = useState([]);
 
+  const [carMakeRes, setCarMakeRes] = useState([]);
+
+  const [carMakeSelected, setCarMakeSelected] = useState([]);
+
   let lower_str = "";
   let cap_str = "";
 
   const [flag, setFlag] = useState([true]);
-  const [check, setCheck] = useState([false]);
 
   const [make, setMake] = useState([]);
   const url =
-    "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/" +
-    searchRes +
-    "/modelyear/" +
+    "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/[abcdefghijklmopqrstuvwxyz]/modelyear/" +
     sliderRes +
     "/vehicletype/" +
     typeRes +
     "?format=json";
+
   useEffect(() => {
     async function fetchData() {
       setFlag(true);
       const request = await axios.get(url);
       setResults(request.data.Results);
-      // console.log("-->", request.data.Results);
-      //   console.log(request.data.results);
+
       const carList = [];
+      const carMakeData = [];
+      var carMakeList = carMakeSelected;
+      carMakeList = carMakeList.map((v) => v.toUpperCase());
       request.data.Results.forEach((element) => {
-        // console.log("==>>", element);
+        if (carMakeList.includes(element.Make_Name)) {
+          console.log("==>>", element.Make_Name);
+          carMakeData.push(element);
+        }
         carList.push(element);
       });
       setData(carList);
+      setCarMakeRes(carMakeData);
+      console.log("------======>>>", carMakeRes);
       setFlag(false);
       return request;
     }
@@ -115,9 +123,11 @@ function Results() {
 
   function getMakeValue(values) {
     setSearchRes(values[0]);
-    console.log("------>", values);
+    setCarMakeSelected(values);
+    setSliderRes(sliderRes);
+    // console.log("------>", values);
+    // console.log("------======>>>", carMakeSelected);
   }
-
   function valueSelectedType(value) {
     setTypeRes(value);
     console.log("+=======", value);
@@ -141,12 +151,6 @@ function Results() {
         </Row>
         <Row align="middle" className="Results__row">
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            {/* <input
-              type="text"
-              ref={textInput}
-              placeholder="Search your car..."
-              className="input__search"
-            /> */}
             <div className="FilterOptions__make">
               <label
                 for="FilterOptions__type__select"
@@ -178,15 +182,15 @@ function Results() {
               </label>
 
               <Select
-                defaultValue="Passenger Car"
+                defaultValue="Select your type of car"
                 style={{ width: "100%" }}
                 onChange={valueSelectedType}
               >
                 <Option value="Motorcycle">Motorcycle</Option>
                 <Option value="Passenger Car">Passenger Car</Option>
-                <Option value="Truck">Truck</Option>
-                <Option value="Trailer">Trailer</Option>
-                <Option value="Bus">Bus</Option>
+                <Option value="Truck">Truck </Option>
+                <Option value="Bus">Bus </Option>
+                <Option value="Trailer">Trailer </Option>
                 <Option value="Multipurpose Passenger Vehicle">
                   Multipurpose Passenger Vehicle (MPV)
                 </Option>
@@ -210,11 +214,11 @@ function Results() {
                   Year Range
                 </label>
                 <Slider
-                  min={1949}
+                  min={1995}
                   max={2022}
                   marks={marks}
                   range={{ draggableTrack: true }}
-                  defaultValue={[2000, 2010]}
+                  defaultValue={[2004, 2010]}
                   onAfterChange={getSliderValue}
                 />
               </div>
@@ -226,19 +230,21 @@ function Results() {
         <img src={SeparateSvg} alt="back svg" />
       </div>
       <div className="Results__group">
-        {searchRes &&
-        searchRes.length != 0 &&
+        {carMakeRes &&
+        carMakeRes.length !== 0 &&
+        // searchRes &&
+        // searchRes.length !== 0 &&
         typeRes &&
-        typeRes.length != 0 &&
+        typeRes.length !== 0 &&
         sliderRes &&
-        sliderRes.length != 0 ? (
+        sliderRes.length !== 0 ? (
           flag ? (
             <div className="Results__loading">
               <img src={loadingGif} alt="loading gif"></img>
             </div>
           ) : (
             <div>
-              <ShowResults data={data} />
+              <ShowResults data={carMakeRes} />
             </div>
           )
         ) : (
