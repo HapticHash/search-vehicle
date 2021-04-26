@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Results.css";
 import axios from "axios";
 import { Col, Row, Select, Slider, Typography, Tag } from "antd";
-
 import ShowResults from "../ShowResults/ShowResults";
-
 import loadingGif from "../../assets/loading.gif";
 import SeparateSvg from "../../assets/separate.svg";
 
@@ -47,18 +45,14 @@ function tagRender(props) {
 
 function Results() {
   const { Title } = Typography;
-
-  var store = [];
-  let lower_str = "";
-  let cap_str = "";
   var sliderVal = 2021;
-
   const { Option } = Select;
   const [options, setOptions] = useState([]);
   const [typeRes, setTypeRes] = useState([]);
   const [sliderRes, setSliderRes] = useState([2021]);
   const [carMakeRes, setCarMakeRes] = useState([]);
   const [allCarMakeRes, setAllCarMakeRes] = useState([]);
+  const [allVehicleTypeRes, setAllVehicleTypeRes] = useState([]);
   const [carMakeSelected, setCarMakeSelected] = useState([]);
   const [flag, setFlag] = useState([true]);
 
@@ -71,13 +65,29 @@ function Results() {
     typeRes +
     "?format=json";
 
+  const urlForAllMakes =
+    "https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json";
+
+  const urlToShowAllMakeSelected =
+    "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/[" +
+    carMakeSelected +
+    "]/modelyear/" +
+    sliderRes +
+    "/vehicletype/[allvehicletypes]?format=json";
+
+  const urlToShowAllVehicleTypesSelected =
+    "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/[allvehiclesmake]/modelyear/" +
+    sliderRes +
+    "/vehicletype/" +
+    typeRes +
+    "?format=json";
+
   useEffect(() => {
     async function fetchData() {
       setFlag(true);
       const request = await axios.get(urlToFilter);
 
       const carMakeData = [];
-      console.log("->>-->> CarSelected: ", carMakeSelected);
       var carMakeList = carMakeSelected;
       carMakeList = carMakeList.map((v) => v.toUpperCase());
       request.data.Results.forEach((element) => {
@@ -93,10 +103,10 @@ function Results() {
     fetchData();
   }, [urlToFilter]);
 
-  const urlForAllMakes =
-    "https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json";
   useEffect(() => {
     async function fetchData() {
+      let lower_str = "";
+      let cap_str = "";
       const request = await axios.get(urlForAllMakes);
       const carMakeList = [];
       request.data.Results.forEach((element) => {
@@ -110,20 +120,12 @@ function Results() {
     fetchData();
   }, [urlForAllMakes]);
 
-  const urlToShowAll =
-    "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/[" +
-    carMakeSelected +
-    "]/modelyear/" +
-    sliderRes +
-    "/vehicletype/[allvehicletypes]?format=json";
-
   useEffect(() => {
     async function fetchData() {
       setFlag(true);
-      const request = await axios.get(urlToShowAll);
+      const request = await axios.get(urlToShowAllMakeSelected);
 
       const carAllMakeData = [];
-      console.log("->>-->> CarSelected: ", carMakeSelected);
       var carMakeList = carMakeSelected;
       carMakeList = carMakeList.map((v) => v.toUpperCase());
       request.data.Results.forEach((element) => {
@@ -136,17 +138,27 @@ function Results() {
       return request;
     }
     fetchData();
-  }, [urlToShowAll]);
+  }, [urlToShowAllMakeSelected]);
+
+  useEffect(() => {
+    async function fetchData() {
+      setFlag(true);
+      const request = await axios.get(urlToShowAllVehicleTypesSelected);
+
+      setAllVehicleTypeRes(request.data.Results);
+      setFlag(false);
+      return request;
+    }
+    fetchData();
+  }, [urlToShowAllVehicleTypesSelected]);
 
   function getMakeValue(values) {
-    console.log("length-->>", values.length);
     const Max = 5;
     values.length <= Max && setCarMakeSelected(values);
   }
 
   function valueSelectedType(value) {
     setTypeRes(value);
-    console.log("+=======", value);
   }
 
   function getSliderValue(val) {
@@ -164,7 +176,7 @@ function Results() {
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div className="FilterOptions__make">
               <label
-                for="FilterOptions__type__select"
+                htmlFor="FilterOptions__type__select"
                 className="Filter__label"
               >
                 Manufacturer of Car <span>*(Select max 5 values)</span>
@@ -187,7 +199,7 @@ function Results() {
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div className="FilterOptions__type">
               <label
-                for="FilterOptions__type__select"
+                htmlFor="FilterOptions__type__select"
                 className="Filter__label"
               >
                 Type of Car
@@ -198,7 +210,6 @@ function Results() {
                 style={{ width: "100%" }}
                 onChange={valueSelectedType}
               >
-                <Option value="Select">Select your type of car</Option>
                 <Option value="Bus">Bus</Option>
                 <Option value="Incomplete Vehicle">Incomplete Vehicle</Option>
                 <Option value="Low Speed Vehicle">
@@ -221,7 +232,7 @@ function Results() {
             <div className="FilterOptions__year">
               <div className="YearSlider">
                 <label
-                  for="FilterOptions__make__select"
+                  htmlFor="FilterOptions__make__select"
                   className="Filter__label__year"
                   align="middle"
                 >
@@ -243,42 +254,32 @@ function Results() {
         <img src={SeparateSvg} alt="back svg" />
       </div>
       <div className="Results__group">
-        {/* {typeRes &&
-        typeRes.length !== 0 &&
-        sliderRes &&
-        sliderRes.length !== 0 ? (
-          flag ? (
-            <div className="Results__loading">
-              <img src={loadingGif} alt="loading gif"></img>
-            </div>
-          ) : (
-            <div>
-              <ShowResults data={carMakeRes} />
-            </div>
-          )
-        ) : (
-          <div>
-            <div className="card__error__filter">
-              <div>
-                <img
-                  className="card__error__img__filter"
-                  src="https://cdn.dribbble.com/users/754943/screenshots/2761885/dribbble-filter.gif"
-                  alt="apply filters"
-                />
-                <h1>Please apply filters</h1>
-                <p>It seems like there are no filters applied</p>
-              </div>
-            </div>
+        {flag ? (
+          <div className="Results__loading">
+            <img src={loadingGif} alt="loading gif"></img>
           </div>
-        )} */}
-        {allCarMakeRes &&
-        allCarMakeRes.length !== 0 &&
-        sliderRes &&
-        sliderRes.length !== 0 ? (
-          flag ? (
-            <div className="Results__loading">
-              <img src={loadingGif} alt="loading gif"></img>
-            </div>
+        ) : (allCarMakeRes && allCarMakeRes.length !== 0) ||
+          (typeRes && typeRes.length !== 0) ? (
+          allCarMakeRes && allCarMakeRes.length !== 0 ? (
+            flag ? (
+              <div className="Results__loading">
+                <img src={loadingGif} alt="loading gif"></img>
+              </div>
+            ) : typeRes && typeRes.length !== 0 ? (
+              flag ? (
+                <div className="Results__loading">
+                  <img src={loadingGif} alt="loading gif"></img>
+                </div>
+              ) : (
+                <div>
+                  <ShowResults data={carMakeRes} />
+                </div>
+              )
+            ) : (
+              <div>
+                <ShowResults data={allCarMakeRes} />
+              </div>
+            )
           ) : typeRes && typeRes.length !== 0 ? (
             flag ? (
               <div className="Results__loading">
@@ -286,12 +287,22 @@ function Results() {
               </div>
             ) : (
               <div>
-                <ShowResults data={carMakeRes} />
+                <ShowResults data={allVehicleTypeRes} />
               </div>
             )
           ) : (
             <div>
-              <ShowResults data={allCarMakeRes} />
+              <div className="card__error__filter">
+                <div>
+                  <img
+                    className="card__error__img__filter"
+                    src="https://cdn.dribbble.com/users/754943/screenshots/2761885/dribbble-filter.gif"
+                    alt="apply filters"
+                  />
+                  <h1>Please apply filters</h1>
+                  <p>It seems like there are no filters applied</p>
+                </div>
+              </div>
             </div>
           )
         ) : (
@@ -315,7 +326,3 @@ function Results() {
 }
 
 export default Results;
-
-{
-  /* <ShowResults data={allCarMakeRes} /> */
-}

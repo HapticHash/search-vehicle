@@ -28,9 +28,9 @@ function getCarImage(vehicleType) {
   } else if (vehicleType === "Truck ") {
     vehicleImageUrl = TruckImage;
   } else if (vehicleType === "Bus") {
-    vehicleImageUrl = OffRoadImage;
-  } else if (vehicleType === "Off Road Vehicle") {
     vehicleImageUrl = BusImage;
+  } else if (vehicleType === "Off Road Vehicle") {
+    vehicleImageUrl = OffRoadImage;
   } else if (vehicleType === "Trailer") {
     vehicleImageUrl = TrailerImage;
   } else if (vehicleType === "Multipurpose Passenger Vehicle (MPV)") {
@@ -46,15 +46,15 @@ function showResults(props) {
   return (
     <div className="Results__data">
       {props.data && props.data.length > 0 ? (
-        props.data.map((datas) => {
+        props.data.map((datas, index) => {
           return (
-            <div key={datas.length} className="card">
+            <div key={index} className="card">
               <div>
                 <div className="card__image">
                   <img
                     className="card__img"
                     src={getCarImage(datas.VehicleTypeName)}
-                    alt="car image"
+                    alt={datas.Model_Name}
                   />
                 </div>
                 <h2 className="Card__heading">
@@ -74,8 +74,11 @@ function showResults(props) {
                 src="https://cdn.dribbble.com/users/2469324/screenshots/6538803/comp_3.gif"
                 alt="error"
               />
-              <h1>Results Not Found!</h1>
-              <p>Seems like there are no matching results available</p>
+              <h1>Oh No!</h1>
+              <p>
+                It seems like there are no matching results available. Please
+                try searching using other filter options
+              </p>
             </div>
           </div>
         </div>

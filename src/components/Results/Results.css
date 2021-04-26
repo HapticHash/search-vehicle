@@ -136,7 +136,9 @@ input {
 .ant-slider-step {
   background: #e0e0e0 !important;
 }
-
+.ant-slider-dot .ant-slider-dot-active {
+  margin-top: -1px !important;
+}
 .ant-slider-track {
   background-color: transparent !important;
   height: 6px !important;
@@ -153,6 +155,7 @@ input {
   z-index: 2 !important;
 }
 .ant-slider-dot {
+  margin-top: -1px !important;
   width: 10px !important;
   height: 10px !important;
   border: 1px solid #101820ff !important;
