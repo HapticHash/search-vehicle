@@ -3,7 +3,7 @@ import "./Results.css";
 import axios from "axios";
 import { Col, Row, Select, Slider, Typography, Tag } from "antd";
 
-import ShowResults from "./ShowResults";
+import ShowResults from "../ShowResults/ShowResults";
 
 import loadingGif from "../../assets/loading.gif";
 import SeparateSvg from "../../assets/separate.svg";
@@ -33,8 +33,8 @@ function tagRender(props) {
       closable={closable}
       onClose={onClose}
       style={{
-        margin: 5,
-        marginLeft: 5,
+        marginTop: 5,
+        marginBottom: 5,
         padding: 5,
         paddingLeft: 10,
         paddingRight: 10,
@@ -47,30 +47,25 @@ function tagRender(props) {
 
 function Results() {
   const { Title } = Typography;
+
   var store = [];
-  var sliderVal1 = 0;
-  var sliderVal2 = 0;
-  const { Option } = Select;
-
-  const [options, setOptions] = useState([]);
-  const [data, setData] = useState([]);
-  const [results, setResults] = useState([]);
-  const [searchRes, setSearchRes] = useState([]);
-  const [typeRes, setTypeRes] = useState([]);
-  const [sliderRes, setSliderRes] = useState([]);
-
-  const [carMakeRes, setCarMakeRes] = useState([]);
-
-  const [carMakeSelected, setCarMakeSelected] = useState([]);
-
   let lower_str = "";
   let cap_str = "";
+  var sliderVal = 2018;
 
+  const { Option } = Select;
+  const [options, setOptions] = useState([]);
+  const [typeRes, setTypeRes] = useState([]);
+  const [sliderRes, setSliderRes] = useState([2018]);
+  const [carMakeRes, setCarMakeRes] = useState([]);
+  const [allCarMakeRes, setAllCarMakeRes] = useState([]);
+  const [carMakeSelected, setCarMakeSelected] = useState([]);
   const [flag, setFlag] = useState([true]);
 
-  const [make, setMake] = useState([]);
-  const url =
-    "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/[abcdefghijklmopqrstuvwxyz]/modelyear/" +
+  const urlToFilter =
+    "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/[" +
+    carMakeSelected +
+    "]/modelyear/" +
     sliderRes +
     "/vehicletype/" +
     typeRes +
@@ -79,36 +74,30 @@ function Results() {
   useEffect(() => {
     async function fetchData() {
       setFlag(true);
-      const request = await axios.get(url);
-      setResults(request.data.Results);
+      const request = await axios.get(urlToFilter);
 
-      const carList = [];
       const carMakeData = [];
+      console.log("->>-->> CarSelected: ", carMakeSelected);
       var carMakeList = carMakeSelected;
       carMakeList = carMakeList.map((v) => v.toUpperCase());
       request.data.Results.forEach((element) => {
         if (carMakeList.includes(element.Make_Name)) {
-          console.log("==>>", element.Make_Name);
           carMakeData.push(element);
         }
-        carList.push(element);
       });
-      setData(carList);
+
       setCarMakeRes(carMakeData);
-      console.log("------======>>>", carMakeRes);
       setFlag(false);
       return request;
     }
     fetchData();
-  }, [url]);
+  }, [urlToFilter]);
 
-  const url2 =
+  const urlForAllMakes =
     "https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes?format=json";
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(url2);
-      setMake(request.data.Results);
-      // console.log("==>", request.data.Results);
+      const request = await axios.get(urlForAllMakes);
       const carMakeList = [];
       request.data.Results.forEach((element) => {
         lower_str = element.Make_Name.toLowerCase();
@@ -119,34 +108,56 @@ function Results() {
       return request;
     }
     fetchData();
-  }, [url2]);
+  }, [urlForAllMakes]);
+
+  const urlToShowAll =
+    "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/[" +
+    carMakeSelected +
+    "]/modelyear/" +
+    sliderRes +
+    "/vehicletype/[allvehicletypes]?format=json";
+
+  useEffect(() => {
+    async function fetchData() {
+      setFlag(true);
+      const request = await axios.get(urlToShowAll);
+
+      const carAllMakeData = [];
+      console.log("->>-->> CarSelected: ", carMakeSelected);
+      var carMakeList = carMakeSelected;
+      carMakeList = carMakeList.map((v) => v.toUpperCase());
+      request.data.Results.forEach((element) => {
+        if (carMakeList.includes(element.Make_Name)) {
+          carAllMakeData.push(element);
+        }
+      });
+      setAllCarMakeRes(carAllMakeData);
+      setFlag(false);
+      return request;
+    }
+    fetchData();
+  }, [urlToShowAll]);
 
   function getMakeValue(values) {
-    setSearchRes(values[0]);
-    setCarMakeSelected(values);
-    setSliderRes(sliderRes);
-    // console.log("------>", values);
-    // console.log("------======>>>", carMakeSelected);
+    console.log("length-->>", values.length);
+    const Max = 5;
+    values.length <= Max && setCarMakeSelected(values);
   }
+
   function valueSelectedType(value) {
     setTypeRes(value);
     console.log("+=======", value);
   }
+
   function getSliderValue(val) {
-    sliderVal1 = val[0];
-    sliderVal2 = val[1];
-    setSliderRes(sliderVal2);
-    console.log("val a:", sliderVal1, "val b:", sliderVal2);
+    setSliderRes(val);
   }
   return (
     <div className="Results">
       <div className="Results__searchbar">
-        <Row className="App__header Results__row">
+        <Row className="Results__header Results__row">
           <Col span={24}>
-            {/* <div className="image">
-            <img src="https://lh3.googleusercontent.com/proxy/b1wGY5L_AHu4PvFXyU2Z73pFmgNOChRGsvltudPKhV6ZSKISc1Rz_91-3MqmyIke4Hf3cMus3ibtjk4WUIz2pBjy1q68kpI" />
-          </div> */}
-            <Title className="App__header__title">Search your car</Title>
+            <Title className="Results__header__title">Search your car</Title>
           </Col>
         </Row>
         <Row align="middle" className="Results__row">
@@ -156,18 +167,19 @@ function Results() {
                 for="FilterOptions__type__select"
                 className="Filter__label"
               >
-                Manufacturer of Car
+                Manufacturer of Car <span>*(Select max 5 values)</span>
               </label>
               <Select
-                mode="tags"
+                showArrow="true"
+                mode="multiple"
                 className="FilterOptions__make__select"
                 tagRender={tagRender}
                 placement="bottomCenter"
                 defaultValue={[]}
+                value={carMakeSelected}
                 placeholder="Select your car manufacturer"
                 style={{ width: "100%" }}
                 options={options}
-                filterOption={true}
                 onChange={getMakeValue}
               />
             </div>
@@ -186,18 +198,19 @@ function Results() {
                 style={{ width: "100%" }}
                 onChange={valueSelectedType}
               >
-                <Option value="Motorcycle">Motorcycle</Option>
-                <Option value="Passenger Car">Passenger Car</Option>
-                <Option value="Truck">Truck </Option>
-                <Option value="Bus">Bus </Option>
-                <Option value="Trailer">Trailer </Option>
-                <Option value="Multipurpose Passenger Vehicle">
-                  Multipurpose Passenger Vehicle (MPV)
-                </Option>
+                <Option value="Bus">Bus</Option>
+                <Option value="Incomplete Vehicle">Incomplete Vehicle</Option>
                 <Option value="Low Speed Vehicle">
                   Low Speed Vehicle (LSV)
                 </Option>
-                <Option value="Incomplete Vehicle">Incomplete Vehicle</Option>
+                <Option value="Motorcycle">Motorcycle</Option>
+                <Option value="Multipurpose Passenger Vehicle">
+                  Multipurpose Passenger Vehicle (MPV)
+                </Option>
+                <Option value="Off Road Vehicle">Off Road Vehicle</Option>
+                <Option value="Passenger Car">Passenger Car</Option>
+                <Option value="Truck">Truck </Option>
+                <Option value="Trailer">Trailer </Option>
               </Select>
             </div>
           </Col>
@@ -211,14 +224,13 @@ function Results() {
                   className="Filter__label__year"
                   align="middle"
                 >
-                  Year Range
+                  Model year of car
                 </label>
                 <Slider
                   min={1995}
                   max={2022}
                   marks={marks}
-                  range={{ draggableTrack: true }}
-                  defaultValue={[2004, 2010]}
+                  defaultValue={sliderVal}
                   onAfterChange={getSliderValue}
                 />
               </div>
@@ -230,11 +242,7 @@ function Results() {
         <img src={SeparateSvg} alt="back svg" />
       </div>
       <div className="Results__group">
-        {carMakeRes &&
-        carMakeRes.length !== 0 &&
-        // searchRes &&
-        // searchRes.length !== 0 &&
-        typeRes &&
+        {typeRes &&
         typeRes.length !== 0 &&
         sliderRes &&
         sliderRes.length !== 0 ? (
@@ -268,3 +276,7 @@ function Results() {
 }
 
 export default Results;
+
+{
+  /* <ShowResults data={allCarMakeRes} /> */
+}

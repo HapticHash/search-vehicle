@@ -51,6 +51,13 @@ input {
   margin: 0.3em !important;
   text-align: center !important;
 }
+.Results__header {
+  background-color: #f2aa4cff;
+}
+.Results__header__title {
+  margin: 0.5em auto;
+  text-align: center;
+}
 .Results__group {
   width: 90%;
   margin: 0 auto;
@@ -72,7 +79,6 @@ input {
   margin: 2px -4px !important;
 }
 
-/* Filter Options css */
 .ant-select-selector {
   margin: 5px !important;
   padding: 5px 10px !important;
@@ -93,6 +99,12 @@ input {
   font-weight: 500;
   color: #101820ff;
 }
+.Filter__label span {
+  font-size: 11px;
+  float: right;
+  margin-right: 10px;
+  margin-top: 5px;
+}
 .Filter__label__year {
   /* margin: 1em auto; */
   font-size: 1.1em;
@@ -111,7 +123,7 @@ input {
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
   width: auto !important;
 }
-/* Year Slider CSS */
+
 .YearSlider {
   width: 25em;
   margin: 2em auto;
@@ -124,11 +136,15 @@ input {
 .ant-slider-step {
   background: #e0e0e0 !important;
 }
+
 .ant-slider-track {
-  background-color: #101820ff !important;
+  background-color: transparent !important;
   height: 6px !important;
   margin-top: -1px !important;
   z-index: 1 !important;
+}
+.ant-slider-track:hover {
+  background-color: transparent !important;
 }
 .ant-slider-handle {
   width: 20px !important;
@@ -172,4 +188,10 @@ input {
 }
 .card__error__img__filter {
   width: 70%;
+}
+
+@media screen and (min-width: 1150px) {
+  .Results__searchbar__end {
+    margin-top: -2em;
+  }
 }
