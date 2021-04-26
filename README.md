@@ -18,11 +18,11 @@
 
 ---
 
-<img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot%201.png" alt="Home page" width="400"> <img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot2.png" alt="Loading Page" width="400">
+<img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot%201.png" alt="Home page" width="500"> <img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot2.png" alt="Loading Page" width="500">
 
-<img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot3.png" alt="Search using car make and year" width="400"> <img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot4.png" alt="Search using all filters" width="400">
+<img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot3.png" alt="Search using car make and year" width="500"> <img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot4.png" alt="Search using all filters" width="500">
 
-<img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot5.png" alt="Invalid result" width="400"> <img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot6.png" alt="Search using vehicle type and year" width="400">
+<img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot5.png" alt="Invalid result" width="500"> <img src="https://raw.githubusercontent.com/HapticHash/search-vehicle/master/src/assets/screenshots/Screenshot6.png" alt="Search using vehicle type and year" width="500">
 
 <br/>
 <br/>
