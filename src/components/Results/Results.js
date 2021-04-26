@@ -51,12 +51,12 @@ function Results() {
   var store = [];
   let lower_str = "";
   let cap_str = "";
-  var sliderVal = 2018;
+  var sliderVal = 2021;
 
   const { Option } = Select;
   const [options, setOptions] = useState([]);
   const [typeRes, setTypeRes] = useState([]);
-  const [sliderRes, setSliderRes] = useState([2018]);
+  const [sliderRes, setSliderRes] = useState([2021]);
   const [carMakeRes, setCarMakeRes] = useState([]);
   const [allCarMakeRes, setAllCarMakeRes] = useState([]);
   const [carMakeSelected, setCarMakeSelected] = useState([]);
@@ -198,6 +198,7 @@ function Results() {
                 style={{ width: "100%" }}
                 onChange={valueSelectedType}
               >
+                <Option value="Select">Select your type of car</Option>
                 <Option value="Bus">Bus</Option>
                 <Option value="Incomplete Vehicle">Incomplete Vehicle</Option>
                 <Option value="Low Speed Vehicle">
@@ -242,7 +243,7 @@ function Results() {
         <img src={SeparateSvg} alt="back svg" />
       </div>
       <div className="Results__group">
-        {typeRes &&
+        {/* {typeRes &&
         typeRes.length !== 0 &&
         sliderRes &&
         sliderRes.length !== 0 ? (
@@ -253,6 +254,44 @@ function Results() {
           ) : (
             <div>
               <ShowResults data={carMakeRes} />
+            </div>
+          )
+        ) : (
+          <div>
+            <div className="card__error__filter">
+              <div>
+                <img
+                  className="card__error__img__filter"
+                  src="https://cdn.dribbble.com/users/754943/screenshots/2761885/dribbble-filter.gif"
+                  alt="apply filters"
+                />
+                <h1>Please apply filters</h1>
+                <p>It seems like there are no filters applied</p>
+              </div>
+            </div>
+          </div>
+        )} */}
+        {allCarMakeRes &&
+        allCarMakeRes.length !== 0 &&
+        sliderRes &&
+        sliderRes.length !== 0 ? (
+          flag ? (
+            <div className="Results__loading">
+              <img src={loadingGif} alt="loading gif"></img>
+            </div>
+          ) : typeRes && typeRes.length !== 0 ? (
+            flag ? (
+              <div className="Results__loading">
+                <img src={loadingGif} alt="loading gif"></img>
+              </div>
+            ) : (
+              <div>
+                <ShowResults data={carMakeRes} />
+              </div>
+            )
+          ) : (
+            <div>
+              <ShowResults data={allCarMakeRes} />
             </div>
           )
         ) : (

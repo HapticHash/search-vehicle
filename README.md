@@ -2,8 +2,6 @@
 
 ---
 
-Fix:
-
-1. Not showing "no result error"
-2. Not filtering real time
-3. Year slider
+#Points to remember (write one to 2 sentences)
+-- Year slider comment
+-- Why not I provided only year filter for UX

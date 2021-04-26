@@ -60,8 +60,7 @@ function showResults(props) {
                 <h2 className="Card__heading">
                   {capitalizeText(datas.Make_Name)} {datas.Model_Name}
                 </h2>
-                {/* <p>{capitalizeText(datas.Make_Name)}</p> */}
-                {/* <p>{datas.VehicleTypeName}</p> */}
+                <p>[{datas.VehicleTypeName}]</p>
               </div>
             </div>
           );
