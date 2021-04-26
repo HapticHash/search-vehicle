@@ -169,7 +169,9 @@ function Results() {
       <div className="Results__searchbar">
         <Row className="Results__header Results__row">
           <Col span={24}>
-            <Title className="Results__header__title">Search your car</Title>
+            <Title className="Results__header__title">
+              Search your vehicle
+            </Title>
           </Col>
         </Row>
         <Row align="middle" className="Results__row">
@@ -179,7 +181,7 @@ function Results() {
                 htmlFor="FilterOptions__type__select"
                 className="Filter__label"
               >
-                Manufacturer of Car <span>*(Select max 5 values)</span>
+                Manufacturer of vehicle <span>*(Select max 5 values)</span>
               </label>
               <Select
                 showArrow="true"
@@ -202,12 +204,13 @@ function Results() {
                 htmlFor="FilterOptions__type__select"
                 className="Filter__label"
               >
-                Type of Car
+                Type of vehicle
               </label>
 
               <Select
-                defaultValue="Select your type of car"
+                // defaultValue="Select your type of car"
                 style={{ width: "100%" }}
+                placeholder="Select your type of vehicle"
                 onChange={valueSelectedType}
               >
                 <Option value="Bus">Bus</Option>
@@ -236,7 +239,7 @@ function Results() {
                   className="Filter__label__year"
                   align="middle"
                 >
-                  Model year of car
+                  Model year of vehicle
                 </label>
                 <Slider
                   min={1995}
